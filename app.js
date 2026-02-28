@@ -51,10 +51,10 @@ app.use(
     credentials: true,
   }),
 );
+app.set("trust proxy", 1);
 app.use(express.json());
 app.use(cookieParser());
-app.set("trust proxy", 1);
-
+app.use(express.urlencoded({extended: true}))
 // api
 app.get("/", (req, res) => {
   res.send("hello server");
