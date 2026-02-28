@@ -8,7 +8,7 @@ export const isAuth = async (req, res, next) => {
   if (!token) return next(new errHandler("Please login", 401));
 
   // verify token
-  const decodedUser = await jwt.verify(token, process.env.secret_password);
+  const decodedUser = await jwt.verify(token, process.env.SECRET_PASSWORD);
   req.user = decodedUser._id;
 
   if (req.user) {
@@ -22,7 +22,7 @@ export const socketAuthenticator = async (err, socket, next) => {
 
     const authToken = socket.request.cookies["token"];
 
-    const decoded = jwt.verify(authToken, process.env.secret_password);
+    const decoded = jwt.verify(authToken, process.env.SECRET_PASSWORD);
     socket.user = await User.findById(decoded._id);
     return next();
   } catch (error) {
