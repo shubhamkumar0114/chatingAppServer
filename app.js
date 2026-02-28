@@ -32,7 +32,7 @@ const io = new Server(server, {
 
 app.set("io", io)
 
-const port = 3001;
+const port =  process.env.PORT || 5000;
 
 // mongodb connection
 await connectDb(process.env.mongodb_url);
