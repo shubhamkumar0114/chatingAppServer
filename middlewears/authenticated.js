@@ -5,10 +5,11 @@ import jwt from "jsonwebtoken";
 export const isAuth = async (req, res, next) => {
   const token = req.cookies["token"];
   console.log(token)
-  if (!token) return next(new errHandler("Please logins", 401));
+  // if (!token) 
+    // return next(new errHandler("Please logins", 401));
 
   // verify token
-  const decodedUser = await jwt.verify(token, process.env.SECRET_PASSWORD);
+  const decodedUser = jwt.verify(token, process.env.SECRET_PASSWORD);
   req.user = decodedUser._id;
 
   if (req.user) {
