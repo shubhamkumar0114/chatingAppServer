@@ -32,10 +32,10 @@ const io = new Server(server, {
 
 app.set("io", io)
 
-const port =  process.env.PORT || 5000;
+const port =  process.env.PORT || 3001;
 
 // mongodb connection
-await connectDb(process.env.mongodb_url);
+await connectDb(process.env.MONGO_URI);
 
 // cloudinary config
 cloudinary.config({
