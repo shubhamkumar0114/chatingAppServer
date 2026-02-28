@@ -16,7 +16,6 @@ import chatRouter from "./routes/chat.js";
 import userRouter from "./routes/user.js";
 import { Message } from "./models/message.model.js";
 import { socketAuthenticator } from "./middlewears/authenticated.js";
-
 dotenv.config();
 
 const app = express();
