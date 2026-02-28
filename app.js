@@ -46,13 +46,14 @@ cloudinary.config({
 // middlewares
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://chating-app-bice.vercel.app"],
-    method: ["POST", "GET", "DELETE", "PUT"],
+    origin: "https://chating-app-bice.vercel.app",
+    methods: ["POST", "GET", "DELETE", "PUT"],
     credentials: true,
   }),
 );
 app.use(express.json());
 app.use(cookieParser());
+app.set("trust proxy", 1);
 
 // api
 app.get("/", (req, res) => {
