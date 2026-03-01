@@ -21,17 +21,20 @@ export const connectDb = async (url) => {
 };
 
 export const sendToken = async (res, user, statusCode, message) => {
-  const token = jwt.sign({ _id: user._id }, process.env.SECRET_PASSWORD , {expiresIn: "1d"});
-  res.status(statusCode).cookie("token", token, cookieOption).json({
+  const token = jwt.sign({ _id: user._id }, process.env.SECRET_PASSWORD, { expiresIn: "15d" });
+  // Removing cookie logic.
+  res.status(statusCode).json({
     success: true,
     message,
+    token, // Return token to frontend
+    user,
   });
 };
 
 export const emitEvent = (req, event, users, data) => {
   const io = req.app.get("io")
   const usersSockets = getSockets(users);
-  io.to(usersSockets).emit(event , data)
+  io.to(usersSockets).emit(event, data)
   console.log("event emit")
 }
 
