@@ -44,7 +44,7 @@ export const userLogin = tryCatch(async (req, res, next) => {
   if (!isMatchPassword)
     return next(new errHandler("Inviled Username or Password", 404));
 
-  sendToken(res, user, 200, `Welcome back ${user.name} login success`);
+  await sendToken(res, user, 200, `Welcome back ${user.name} login success`);
 });
 
 // get my profile
