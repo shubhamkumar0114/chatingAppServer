@@ -14,7 +14,7 @@ export const userRegister = tryCatch(async (req, res, next) => {
   const { name, username, password, bio } = req.body;
   const file = req.file;
   // console.log(file)
-  if(!file) return next(new errHandler("Please upload avatar", 400))
+  if (!file) return next(new errHandler("Please upload avatar", 400))
 
   const avatar = await uploadFileToCloudinary(file)
 
@@ -32,9 +32,8 @@ export const userRegister = tryCatch(async (req, res, next) => {
 
 // -------------login user--------------
 export const userLogin = tryCatch(async (req, res, next) => {
-  console.log("login test")
+
   const { username, password } = req.body;
-  console.log(username)
   // find user
   const user = await User.findOne({ username }).select("+password");
 
@@ -56,7 +55,13 @@ export const profie = tryCatch(async (req, res, next) => {
 
 // logout user
 export const logout = tryCatch(async (req, res, next) => {
-  res.status(200).cookie("token", "").json({ message: "User logout" });
+  const cookieOption = {
+    maxAge: 0,
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+  };
+  res.status(200).cookie("token", "", cookieOption).json({ message: "User logout" });
 });
 
 // search user
@@ -86,7 +91,7 @@ export const sendRequest = tryCatch(async (req, res, next) => {
   const requestSend = await Request.findOne({
     $or: [
       { sender: req.user, receiver: userId },
-      {sender: userId, receiver: req.user },
+      { sender: userId, receiver: req.user },
     ],
   });
 
@@ -147,7 +152,7 @@ export const acceptRequest = tryCatch(async (req, res, next) => {
 });
 
 export const notifications = tryCatch(async (req, res, next) => {
- 
+
   const requests = await Request.find({ receiver: req.user }).populate(
     "sender",
     "name avatar"
@@ -174,8 +179,8 @@ export const myFriends = tryCatch(async (req, res, next) => {
     members: req.user,
     groupChat: false,
   }).populate("members", "name avatar");
-  
-    
+
+
   const friends = chats.map(({ members }) => {
     const otherUser = getOtherMember(members, req.user);
     return {
@@ -184,14 +189,14 @@ export const myFriends = tryCatch(async (req, res, next) => {
       avatar: otherUser.avatar.url,
     };
   });
-  
+
   if (chatId) {
     const chat = await Chat.findById(chatId);
-     
+
     const avilableFriend = friends.filter(
       (friend) => !chat.members.includes(friend._id)
     );
-     
+
     return res.status(200).json({ success: true, avilableFriend });
   } else {
     return res.status(200).json({ success: true, friends });
