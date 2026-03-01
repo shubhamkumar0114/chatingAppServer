@@ -32,8 +32,9 @@ export const userRegister = tryCatch(async (req, res, next) => {
 
 // -------------login user--------------
 export const userLogin = tryCatch(async (req, res, next) => {
+  console.log("login test")
   const { username, password } = req.body;
-
+  console.log(username)
   // find user
   const user = await User.findOne({ username }).select("+password");
 

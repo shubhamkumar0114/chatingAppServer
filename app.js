@@ -23,7 +23,7 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "https://chating-app-bice.vercel.app",
+    origin: "http://localhost:5173",
     methods: ["POST", "GET", "DELETE", "PUT"],
     credentials: true,
   },
@@ -31,7 +31,7 @@ const io = new Server(server, {
 
 app.set("io", io)
 
-const port =  process.env.PORT || 3001;
+const port =  process.env.PORT || 4001;
 
 // mongodb connection
 await connectDb(process.env.MONGO_URI);
@@ -46,12 +46,12 @@ cloudinary.config({
 // middlewares
 app.use(
   cors({
-    origin: "https://chating-app-bice.vercel.app",
+    origin: "http://localhost:5173",
     methods: ["POST", "GET", "DELETE", "PUT"],
     credentials: true,
   }),
 );
-app.set("trust proxy", 1);
+// app.set("trust proxy", 1);
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({extended: true}))

@@ -14,7 +14,7 @@ const cookieOption = {
 export const connectDb = async (url) => {
   await mongoose
     .connect(url)
-    .then((data) => console.log("connect database"))
+    .then((data) => console.log("connect databases"))
     .catch((err) => {
       throw err;
     });
