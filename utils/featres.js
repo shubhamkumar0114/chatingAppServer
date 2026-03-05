@@ -22,6 +22,7 @@ export const connectDb = async (url) => {
 
 export const sendToken = async (res, user, statusCode, message) => {
   const token = jwt.sign({ _id: user._id }, process.env.SECRET_PASSWORD, { expiresIn: "15d" });
+  res.cookie("token", token, cookieOption);
   // Removing cookie logic.
   res.status(statusCode).json({
     success: true,

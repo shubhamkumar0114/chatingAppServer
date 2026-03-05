@@ -13,7 +13,6 @@ export const userRegister = tryCatch(async (req, res, next) => {
 
   const { name, username, password, bio } = req.body;
   const file = req.file;
-  // console.log(file)
   if (!file) return next(new errHandler("Please upload avatar", 400))
 
   const avatar = await uploadFileToCloudinary(file)
